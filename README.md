@@ -1,72 +1,86 @@
-# HealingSpace
-How to Use
-1. Download the Dataset
-Download the file 20200325_counsel_chat.csv from the original repository:
-🔗 https://github.com/nbertagnolli/counsel-chat/tree/master
+# Healing Space: AI Therapist Fine-Tuning Guide
 
-This dataset contains scraped conversations from individuals seeking support from licensed therapists on counselchat.com.
+This project walks you through fine-tuning an AI therapist model using Google Cloud Vertex AI and running it through a simple user interface.
 
-After downloading, upload the CSV file to your Python environment. If you're using Google Colab, make sure to upload it after opening Healing_Space.ipynb.
+---
 
-2. Convert CSV to JSONL
-Run Healing_Space.ipynb or Healing_Space.py up to the CSV to JSONL conversion section.
-We’ll be uploading the generated .jsonl file to Google Cloud Storage.
+## Steps
 
-In Google Cloud Console, go to Storage > Buckets.
+1. **Download the Dataset**
+   - Download `20200325_counsel_chat.csv` from:
+     - https://github.com/nbertagnolli/counsel-chat/tree/master
+   - This dataset contains counseling questions and therapist responses from users on counselchat.com.
+   - Open `Healing_Space.ipynb` (e.g., in Google Colab).
+   - Upload the CSV file to your Python environment.
 
-Click the “Create” button to make a new bucket (e.g., name it counseling_data or any name you prefer).
+2. **Convert CSV to JSONL**
+   - Open and run `Healing_Space.ipynb` or `Healing_Space.py`.
+   - Stop at the section that converts the CSV file to `.jsonl`.
+   - A `.jsonl` file will be created and used for fine-tuning.
 
-Inside your new bucket, click “Upload Files” and upload the .jsonl file.
+3. **Upload JSONL to Google Cloud Storage**
+   - Go to the [Google Cloud Console](https://console.cloud.google.com/).
+   - Navigate to `Storage > Buckets`.
+   - Click **Create** to make a new bucket (e.g., `counseling_data`).
+   - Open the created bucket.
+   - Click **Upload Files** and select the `.jsonl` file.
 
-3. Supervised Fine-Tuning with Vertex AI
-In Google Cloud Console, open the Navigation menu (☰).
+4. **Fine-Tune the Model on Vertex AI**
+   - Go to `Vertex AI > Tuning` in the Google Cloud Console.
+   - Click **Create tuned model**.
+   - Enter:
+     - **Model name**: `Healing Space`
+     - **Base model**: `gemini-2.0-flash-lite-001`
+     - **Region**: `us-central1 (Iowa)`
+   - (Optional) Click **Advanced options**:
+     - Set **Number of epochs** to `38`
+     - Set **Learning rate multiplier** to `1`
+     - Set **Adapter size** to `4`
+   - Under **Tuning dataset**, select the uploaded `.jsonl` file.
+   - Click **Start tuning**.
+   - Wait approximately 20–25 minutes for tuning to complete.
 
-Go to Vertex AI > Tuning.
+5. **Connect the Fine-Tuned Model to Your Code**
+   - Open `Healing_Space.ipynb` or `Healing_Space.py`.
+   - In the **Connect a supervised model** section, update the code as follows:
 
-Click “Create tuned model”.
+     ```python
+     from vertexai import aiplatform, generative_models
 
-Enter:
+     # Initialize Vertex AI
+     aiplatform.init(project="your-project-id", location="your-region")
 
-Model name: e.g., Healing Space
+     # Reference the fine-tuned model
+     model_name = "projects/your-project-id/locations/your-region/models/your-model-id"
+     ```
 
-Base model: gemini-2.0-flash-lite-001
+   - You can find `project-id`, `region`, and `model-id` in the **Details** section of the tuned model.
 
-Region: us-central1 (Iowa)
+6. **Create a Vertex AI Endpoint**
+   - Run the second code block under the **Connect a supervised model** section.
+   - This will create an endpoint for interacting with your model.
 
-(Optional) Click Advanced options to modify:
+7. **Run the UI and UX Section**
+   - In the **UI and UX** section, update the code block as follows:
 
-Epochs: 38
+     ```python
+     # Initialize Vertex AI
+     aiplatform.init(project="your-project-id", location="your-region")
 
-Learning rate multiplier: 1
+     # Load your fine-tuned AI Therapist model
+     tuned_model = generative_models.GenerativeModel(
+         model_name="projects/your-project-id/locations/your-region/endpoints/your-endpoint-id"
+     )
+     ```
 
-Adapter size: 4
+   - Run the entire code block in the UI and UX section.
+   - The web interface for the AI therapist will launch.
 
-In the Tuning Dataset section, select the JSONL file you uploaded earlier.
-
-Click “Start tuning”. This process usually takes around 20–25 minutes.
-
-4. Connect the Fine-Tuned Model to Your Python Environment
-Return to Healing_Space.ipynb or Healing_Space.py. In the “Connect a supervised model” section:
-
-Update the following with your actual values:
-
-
-aiplatform.init(project="your-project-id", location="your-region")
-model_name = "projects/your-project-id/locations/your-region/models/your-model-id"
-💡 You can find your project ID, region, and model ID in the Details section of your tuned model in Vertex AI.
-
-5. Create an Endpoint
-Run the second code block in the “Connect a supervised model” section. This will create an endpoint for your fine-tuned model.
-
-6. Run the UI/UX
-In the UI and UX section of the notebook or script:
-
-Fill in the following lines with your details:
-
-# Initialize Vertex AI
-aiplatform.init(project="your-project-id", location="your-region")
-
-# Load your fine-tuned AI Therapist model
-tuned_model = GenerativeModel(model_name="projects/your-project-id/locations/your-region/endpoints/your-endpoint-id")
-Run the entire UI and UX section to launch the AI therapist web interface.
-
+8. **Complete**
+   - ✅ Downloaded and prepared the dataset
+   - ✅ Converted CSV to JSONL format
+   - ✅ Uploaded data to Google Cloud Storage
+   - ✅ Fine-tuned the model using Vertex AI
+   - ✅ Connected the model in your Python code
+   - ✅ Created an endpoint
+   - ✅ Deployed the model through a working web interface
