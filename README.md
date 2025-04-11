@@ -14,7 +14,7 @@ This project walks you through fine-tuning an AI therapist model using Google Cl
    - Upload the CSV file to your Python environment.
 
 2. **Convert CSV to JSONL**
-   - Open and run `Healing_Space.ipynb` or `Healing_Space.py`.
+   - Open and run `Healing_Space.ipynb` in your Python environment.
    - Stop at the section that converts the CSV file to `.jsonl`.
    - A `.jsonl` file will be created and used for fine-tuning.
 
@@ -32,7 +32,7 @@ This project walks you through fine-tuning an AI therapist model using Google Cl
      - **Model name**: `Healing Space`
      - **Base model**: `gemini-2.0-flash-lite-001`
      - **Region**: `us-central1 (Iowa)`
-   - (Optional) Click **Advanced options**:
+   - Click **Advanced options**:
      - Set **Number of epochs** to `38`
      - Set **Learning rate multiplier** to `1`
      - Set **Adapter size** to `4`
@@ -41,7 +41,7 @@ This project walks you through fine-tuning an AI therapist model using Google Cl
    - Wait approximately 20–25 minutes for tuning to complete.
 
 5. **Connect the Fine-Tuned Model to Your Code**
-   - Open `Healing_Space.ipynb` or `Healing_Space.py`.
+   - Reopen `Healing_Space.ipynb`.
    - In the **Connect a supervised model** section, update the code as follows:
 
      ```python
