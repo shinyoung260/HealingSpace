@@ -7,14 +7,16 @@ This project walks you through fine-tuning an AI therapist model using Google Cl
 ## Steps
 
 1. **Download the Dataset**
-   - Download `20200325_counsel_chat.csv` from:
+   - Download `20200325_counsel_chat.csv` 
+   - This dataset contains counseling questions and therapist responses from users on counselchat.com:
      - https://github.com/nbertagnolli/counsel-chat/tree/master
-   - This dataset contains counseling questions and therapist responses from users on counselchat.com.
-   - Open `Healing_Space.ipynb` (e.g., in Google Colab).
-   - Upload the CSV file to your Python environment.
+   - Go to the [Google Cloud Console](https://console.cloud.google.com/).
+   - Navigate to `Vertax AI > Colab Enterprise`
+   - Open `Healing_Space.ipynb` in Vertax AI Colab Enterprise by 'Import notebooks'.
+   - Upload the CSV file to your Vertax AI Colab Enterpris environment.
 
 2. **Convert CSV to JSONL**
-   - Open and run `Healing_Space.ipynb` in your Python environment.
+   - Open and run `Healing_Space.ipynb` in Vertax AI Colab Enterprise.
    - Stop at the section that converts the CSV file to `.jsonl`.
    - A `.jsonl` file will be created and used for fine-tuning.
 
@@ -41,7 +43,7 @@ This project walks you through fine-tuning an AI therapist model using Google Cl
    - Wait approximately 20–25 minutes for tuning to complete.
 
 5. **Connect the Fine-Tuned Model to Your Code**
-   - Reopen `Healing_Space.ipynb`.
+   - Reopen `Healing_Space.ipynb` in Vertax AI Colab Enterprise.
    - In the **Connect a supervised model** section, update the code as follows:
 
      ```python
